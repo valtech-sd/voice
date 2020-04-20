@@ -60,6 +60,7 @@ if (window.SpeechRecognition === null) {
         $transcription.textContent += e.results[i][0].transcript;
         if ($confidence.textContent !== '•••') $confidence.textContent = '•••';
         if ($transcription.classList.contains('final')) $transcription.classList.remove('final');
+        processIntents(e.results[i][0].transcript);
       }
     }
   };

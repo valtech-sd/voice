@@ -10,7 +10,16 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import natural from 'natural';
 import nlp from 'compromise'
-import { Avatar } from '@material-ui/core';
+import { Avatar, Divider } from '@material-ui/core';
+
+//images
+import valtech_logo from './images/group.svg';
+import employee_img from './images/employee.jpg';
+import high_five from './images/success.png';
+import customer_img from './images/customer-profile@3x.png'
+import waveform from './images/waveform.png'
+import preferences_icon from './images/image-2@3x.png'
+import lifestyle_icon from './images/image-3@3x.png'
 
 const ColorButton = withStyles((theme) => ({
   root: {
@@ -24,15 +33,6 @@ const ColorButton = withStyles((theme) => ({
   },
 }))(Button);
 
-const LightButton = withStyles((theme) => ({
-  root: {
-    color: theme.palette.getContrastText('#651fff'),
-    backgroundColor: '#651fff',
-    '&:hover': {
-      backgroundColor: '#311b92',
-    },
-  },
-}))(Button);
 
 class EmployeeCard extends React.Component {
   render() {
@@ -41,12 +41,12 @@ class EmployeeCard extends React.Component {
         <CardContent>
           <Grid container spacing={3} direction="row" alignItems='center'>
             <Grid item xs={6}>
-              <img src="images/group.svg" alt="logo" style={{height:20, borderRadius:0}}/>
+              <img src={valtech_logo} alt="logo" style={{height:20, borderRadius:0}}/>
             </Grid>
             <Grid item xs={6}>
               <Grid container spacing={3} direction="row-reverse" alignItems="center">
                 <h1 style={{marginLeft: 16, marginRight:16, color: "grey"}}>Associate Name</h1>
-                <Avatar alt="Employee Name" src="/images/employee.jpg"/>
+                <Avatar alt="Employee Name" src={employee_img}/>
               </Grid>
             </Grid>
           </Grid>
@@ -61,10 +61,10 @@ class OscilloscopeDiv extends React.Component {
     return (
       <Grid container spacing={3} direction="row" alignItems="center">
         <Grid item xs={6}>
-          <img src="/images/success.png" alt="avatar"/>
+          <img src={high_five} alt="avatar"/>
         </Grid>
         <Grid item xs={6}>
-          <img src="/images/waveform.png" alt="waveform" style={{width:500}}/>
+          <img src={waveform} alt="waveform" style={{width:500}}/>
         </Grid>
       </Grid>   
       )
@@ -82,7 +82,7 @@ class ProfileCard extends React.Component {
         </Typography>
         <Grid container spacing={3} direction="row">
             <Grid item xs={2}>
-              <img src="/images/customer-profile@3x.png" alt="client" style={{height:80, width:80}}/>
+              <img src={customer_img} alt="client" style={{height:80, width:80}}/>
             </Grid>
             <Grid item xs={6}>
               <Typography variant="h5" component="h2" gutterBottom style={{color:'#304ffe', fontFamily:'Poppins'}}>
@@ -111,18 +111,14 @@ class PreferencesCard extends React.Component {
           </Typography>
           <Grid container spacing={3} direction="row">
             <Grid item xs={2}>
-              <img src="/images/image-2@3x.png" alt="client" style={{height:80, width:80}}/>
+              <img src={preferences_icon} alt="client" style={{height:80, width:80}}/>
             </Grid>
             <Grid item xs={6}>
               <Typography variant="h5" component="p" style={{fontFamily: 'Poppins', fontSize: 24}}>
                 { this.props.style }
               </Typography>
-              <Typography variant="body2" component="h2" gutterBottom>
-                Colour: { this.props.colour }
-              </Typography>
-              <Typography variant="body2" component="p">
-                Size: { this.props.size }
-              </Typography>
+              <h1> Colour: { this.props.colour } </h1>
+              <h1> Size: { this.props.size } </h1>
             </Grid>
           </Grid>
         </CardContent>
@@ -146,19 +142,12 @@ class LifestyleCard extends React.Component {
         </Typography>
         <Grid container spacing={3} direction='row'>
           <Grid item xs={2}>
-            {/* <Avatar alt="icon" src="/images/image-3@3x.png"/> */}
-            <img src="/images/image-3@3x.png" alt="client" style={{height:80, width:80}}/>
+            <img src={lifestyle_icon} alt="client" style={{height:80, width:80}}/>
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="h5" component="h2" gutterBottom>
-              Destination: {this.props.destination}
-            </Typography>
-            <Typography variant="body2" component="p">
-              Climate: {this.props.climate}
-            </Typography>
-            <Typography variant="body2" component="p">
-              Beverage: {this.props.beverage}
-            </Typography>
+            <h1> Destination: { this.props.destination } </h1>
+            <h1> Climate: { this.props.climate } </h1>
+            <h1> Beverage: { this.props.beverage } </h1>
           </Grid>
         </Grid>
         </CardContent>
@@ -177,21 +166,66 @@ class CustomerCartCard extends React.Component {
     return (
       <Card className={classes.root} variant="outlined" style={{height:"100%"}}>
         <CardContent>
-          <Typography className={classes.title} color="textSecondary" gutterBottom>
+          <Typography className={classes.title} gutterBottom style={{fontFamily: 'Poppins', fontSize: 24}}>
             Customer Cart
           </Typography>
-          <Typography variant="h5" component="h2" gutterBottom>
+          <Grid container direction="row">
+            <Grid item xs={6}>
+              <h1 style={{color:"grey"}}> Items </h1>
+            </Grid>
+            <Grid item xs={6}>
+              <Grid container direction="row-reverse">
+                <h1 style={{color:"grey"}}> Qty </h1>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Divider light/>
+          <Grid>
+    
+          </Grid>
+          <Grid container spacing={3} direction="column">
+            <Grid item>
+              <ProductCards products={this.props.products}/>
+            </Grid>
+          </Grid>
+          
+          {/* <Typography variant="h5" component="h2" gutterBottom>
             {this.props.product1}
-          </Typography>
-          <Typography variant="h5" component="h2" gutterBottom>
+          </Typography> */}
+          <Divider light/>
+          {/* <Typography variant="h5" component="h2" gutterBottom>
             {this.props.product2}
-          </Typography>
+          </Typography> */}
         </CardContent>
         <CardActions>
-          <Button size="small">Listen</Button>
-          <ColorButton size="small">Checkout</ColorButton>
+          <Grid container direction="row-reverse">
+            <ColorButton size="small" style={{padding: 20}}>Prepare Order</ColorButton>
+          </Grid>
         </CardActions>
       </Card>
+    )
+  }
+}
+
+class ProductCards extends React.Component {
+  render(){
+
+    const classes = {};
+
+    return (
+      this.props.products.length > 0 && this.props.products.map((item) => {
+        return (
+          <Card className={classes.root}>
+            <CardContent>
+              <h1>{item.productName}</h1>
+            </CardContent>
+            <CardActions>
+              <ColorButton size="small">Remove</ColorButton>
+            </CardActions>
+            <Divider light/>
+          </Card>
+        )
+      })
     )
   }
 }
@@ -218,11 +252,8 @@ class App extends React.Component {
       product1: " ",
       product2: " ",
       product3: " ",
+      products: []
     };
-  }
-
-  trainClassifiers = function() {
-    
   }
 
   printList = function(doc) {
@@ -299,12 +330,10 @@ class App extends React.Component {
 
       //listen for person's name
       let nameTest = nlp(text).people();
-      //console.log(this.printList(nameTest));
       let nameArray = nameTest.out('array')
       let nameItem = nameArray.map(function(e){
         return e;
       });
-      //console.log(nameItem)
       if (nameItem.length >= 1) {
         this.setState({
           name: nameItem
@@ -313,12 +342,10 @@ class App extends React.Component {
       
       //listen for company
       let companyTest = nlp(text).organizations();
-      //console.log(this.printList(companyTest));
       let companyArray = companyTest.out('array')
       let companyItem = companyArray.map(function(e){
         return e;
       });
-      //console.log(companyItem)
       if (companyItem.length >= 1) {
         this.setState({
           company: companyItem
@@ -351,22 +378,23 @@ class App extends React.Component {
 
       if (style === 'hoodie' && colour === 'black') {
         this.setState({
-          product2: "Valtech Hoodie - " + 'black (Unavailable)' 
+          // product2: "Valtech Hoodie - " + "black (Unavailable)", 
+          products: this.state.products.concat([{ productName: "Valtech Hoodie - black (Unavailable)" }])
         })
       } else if (style === 'hoodie' && colour !== 'default') {
         this.setState({
-          product2: "Valtech Hoodie - " + colour 
+          // product2: "Valtech Hoodie - " + colour 
+          products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour }])
         })
       }
 
       //listen for destination
       let destinationTest = nlp(text).places();
-      //console.log(this.printList(destinationTest));
       let destinationArray = destinationTest.out('array')
       let destinationItem = destinationArray.map(function(e){
         return e;
       });
-      //console.log(destinationItem)
+
       if (destinationItem.length >= 1) {
         this.setState({
           destination: destinationItem
@@ -391,7 +419,8 @@ class App extends React.Component {
 
       if (beverage === 'coffee') {
         this.setState({
-          product1: "Two Lines Coffee Tumbler"
+          // product1: "Two Lines Coffee Tumbler"
+          products: this.state.products.concat([{ productName: "Two Lines Coffee Tumbler" }])
         })
       }
 
@@ -441,9 +470,9 @@ class App extends React.Component {
         <Grid item xs={6}>
             <Grid style={{height:"100%"}}>
               <CustomerCartCard
-                product1={this.state.product1}
-                product2={this.state.product2}
-                product3={this.state.product3}
+                // product1={this.state.product1}
+                // product2={this.state.product2}
+                products ={this.state.products}
               />
             </Grid>
         </Grid>

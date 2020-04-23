@@ -2,8 +2,7 @@
 
 body {
   margin: 0;
-  background-image: url("./images/background.svg");
-  /* font-family: 'Poppins'; */
+  background-image: url("images/background.svg");
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -20,6 +20,9 @@ import customer_img from './images/customer-profile@3x.png'
 import waveform from './images/waveform.png'
 import preferences_icon from './images/image-2@3x.png'
 import lifestyle_icon from './images/image-3@3x.png'
+import hoodie_image from './images/item-3@3x.png'
+import coffee_image from './images/item@3x.png'
+import generic_image from './images/item-2@3x.png'
 
 const ColorButton = withStyles((theme) => ({
   root: {
@@ -92,10 +95,10 @@ class ProfileCard extends React.Component {
             </Grid>
         </Grid>
         </CardContent>
-        <CardActions>
+        {/* <CardActions>
           <Button size="small">Listen</Button>
           <ColorButton size="small">Confirm</ColorButton>
-        </CardActions>
+        </CardActions> */}
       </Card>
     )
   }
@@ -122,10 +125,10 @@ class PreferencesCard extends React.Component {
             </Grid>
           </Grid>
         </CardContent>
-        <CardActions>
+        {/* <CardActions>
           <Button size="small">Listen</Button>
           <ColorButton size="small">Confirm</ColorButton>
-        </CardActions>
+        </CardActions> */}
       </Card>
     )
   }
@@ -151,10 +154,10 @@ class LifestyleCard extends React.Component {
           </Grid>
         </Grid>
         </CardContent>
-        <CardActions>
+        {/* <CardActions>
           <Button size="small">Listen</Button>
           <ColorButton size="small">Confirm</ColorButton>
-        </CardActions>
+        </CardActions> */}
       </Card>
     )
   }
@@ -180,22 +183,13 @@ class CustomerCartCard extends React.Component {
             </Grid>
           </Grid>
           <Divider light/>
-          <Grid>
-    
-          </Grid>
+   
           <Grid container spacing={3} direction="column">
             <Grid item>
               <ProductCards products={this.props.products}/>
             </Grid>
           </Grid>
-          
-          {/* <Typography variant="h5" component="h2" gutterBottom>
-            {this.props.product1}
-          </Typography> */}
-          <Divider light/>
-          {/* <Typography variant="h5" component="h2" gutterBottom>
-            {this.props.product2}
-          </Typography> */}
+        
         </CardContent>
         <CardActions>
           <Grid container direction="row-reverse">
@@ -217,10 +211,19 @@ class ProductCards extends React.Component {
         return (
           <Card className={classes.root}>
             <CardContent>
-              <h1>{item.productName}</h1>
+              <Grid container spacing={2} direction="row">
+                <Grid item>
+                  <img src={item.imageName} style={{height:80, width:80}}/>
+                </Grid>
+                <Grid item> 
+                  <h1>{item.productName}</h1>
+                </Grid>
+              </Grid>
             </CardContent>
             <CardActions>
-              <ColorButton size="small">Remove</ColorButton>
+              <Grid container direction="row-reverse">
+                <ColorButton size="small">Remove</ColorButton>
+              </Grid>
             </CardActions>
             <Divider light/>
           </Card>
@@ -260,58 +263,58 @@ class App extends React.Component {
     return JSON.stringify(doc.out('array'), null, 2)
   }
 
-
-  componentWillMount() {
+  componentDidMount() {
 
     var colourClassifier = new natural.BayesClassifier();
     colourClassifier.addDocument('default', 'default');
-    colourClassifier.addDocument('grey', 'grey');
-    colourClassifier.addDocument('white', 'white');
-    colourClassifier.addDocument('black', 'black');
-    colourClassifier.addDocument('purple', 'purple');
-    colourClassifier.addDocument('blue', 'blue');
-    colourClassifier.addDocument('yellow', 'yellow');
-    colourClassifier.addDocument('orange', 'orange');
-    colourClassifier.addDocument('red', 'red');
-    colourClassifier.addDocument('pink', 'pink');
-    colourClassifier.addDocument('dark', 'dark');
-    colourClassifier.addDocument('light', 'light');
+    colourClassifier.addDocument('grey', 'Grey');
+    colourClassifier.addDocument('white', 'White');
+    colourClassifier.addDocument('black', 'Black');
+    colourClassifier.addDocument('purple', 'Purple');
+    colourClassifier.addDocument('blue', 'Blue');
+    colourClassifier.addDocument('yellow', 'Yellow');
+    colourClassifier.addDocument('orange', 'Orange');
+    colourClassifier.addDocument('red', 'Red');
+    colourClassifier.addDocument('pink', 'Pink');
+    colourClassifier.addDocument('dark', 'Dark');
+    colourClassifier.addDocument('light', 'Light');
     colourClassifier.train();
 
     var sizeClassifier = new natural.BayesClassifier();
     sizeClassifier.addDocument('default', 'default');
-    sizeClassifier.addDocument('small', 'small');
-    sizeClassifier.addDocument('medium', 'medium');
-    sizeClassifier.addDocument('large', 'large');
-    sizeClassifier.addDocument('extra large', 'extra large');
+    sizeClassifier.addDocument('small', 'Small');
+    sizeClassifier.addDocument('medium', 'Medium');
+    sizeClassifier.addDocument('large', 'Large');
+    sizeClassifier.addDocument('extra large', 'Extra Large');
     sizeClassifier.train();
 
     var styleClassifier = new natural.BayesClassifier();
     styleClassifier.addDocument('default', 'default');
-    styleClassifier.addDocument('hoodie', 'hoodie');
-    styleClassifier.addDocument('sweatshirt', 'sweatshirt');
-    styleClassifier.addDocument('long sleeve', 'long sleeve');
-    styleClassifier.addDocument('short sleeve', 'short sleeve');
-    styleClassifier.addDocument('t-shirt', 't-shirt');
+    styleClassifier.addDocument('hoodie', 'Hoodie');
+    styleClassifier.addDocument('sweatshirt', 'Sweatshirt');
+    styleClassifier.addDocument('long sleeve', 'Long Sleeve');
+    styleClassifier.addDocument('short sleeve', 'Short Sleeve');
+    styleClassifier.addDocument('t-shirt', 'T-Shirt');
     styleClassifier.train();
 
     var climateClassifier = new natural.BayesClassifier();
     climateClassifier.addDocument('default', 'default');
-    climateClassifier.addDocument('hot', 'hot')
-    climateClassifier.addDocument('warm', 'warm');
-    climateClassifier.addDocument('cold', 'cold');
-    climateClassifier.addDocument('temperate', 'temperate');
+    climateClassifier.addDocument('hot', 'Hot')
+    climateClassifier.addDocument('warm', 'Warm');
+    climateClassifier.addDocument('cold', 'Cold');
+    climateClassifier.addDocument('temperate', 'Temperate');
     climateClassifier.train();
 
     var beverageClassifier = new natural.BayesClassifier();
     beverageClassifier.addDocument('default', 'default');
-    beverageClassifier.addDocument('coffee', 'coffee');
-    beverageClassifier.addDocument('coke', 'coke');
-    beverageClassifier.addDocument('pepsi', 'pepsi');
-    beverageClassifier.addDocument('beer', 'beer');
-    beverageClassifier.addDocument('sprite', 'sprite');
-    beverageClassifier.addDocument('mountain dew', 'mountain dew');
-    beverageClassifier.addDocument('wine', 'wine');
+    beverageClassifier.addDocument('water', 'Water');
+    beverageClassifier.addDocument('coffee', 'Coffee');
+    beverageClassifier.addDocument('coke', 'Coke');
+    beverageClassifier.addDocument('pepsi', 'Pepsi');
+    beverageClassifier.addDocument('beer', 'Beer');
+    beverageClassifier.addDocument('sprite', 'Sprite');
+    beverageClassifier.addDocument('mountain dew', 'Mountain dew');
+    beverageClassifier.addDocument('wine', 'Wine');
     beverageClassifier.train();
 
     var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -321,6 +324,7 @@ class App extends React.Component {
     recognition.maxAlternatives = 1;
     recognition.lang = 'en-US';
     recognition.start();
+    recognition.onend = () => recognition.start()
   
     recognition.addEventListener('result', (e) => {
       let last = e.results.length - 1;
@@ -376,15 +380,21 @@ class App extends React.Component {
         })
       }
 
-      if (style === 'hoodie' && colour === 'black') {
+      if (style === 'Hoodie' && colour !== 'default' && colour !== 'White') {
         this.setState({
-          // product2: "Valtech Hoodie - " + "black (Unavailable)", 
-          products: this.state.products.concat([{ productName: "Valtech Hoodie - black (Unavailable)" }])
+          products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour + " (Unavailable)", imageName: generic_image }])
         })
-      } else if (style === 'hoodie' && colour !== 'default') {
+      }
+
+      if (style === 'Hoodie' && colour === 'White') {
         this.setState({
-          // product2: "Valtech Hoodie - " + colour 
-          products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour }])
+          products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour, imageName: hoodie_image }])
+        })
+      }
+
+      if (style === 'T-Shirt' && colour !== 'default') {
+        this.setState({
+          products: this.state.products.concat([{ productName: "Valtech T-Shirt - " + colour, imageName: generic_image }])
         })
       }
 
@@ -417,10 +427,15 @@ class App extends React.Component {
         })
       }
 
-      if (beverage === 'coffee') {
+      if (beverage === 'Coffee') {
         this.setState({
-          // product1: "Two Lines Coffee Tumbler"
-          products: this.state.products.concat([{ productName: "Two Lines Coffee Tumbler" }])
+          products: this.state.products.concat([{ productName: "Two Lines Coffee Tumbler",  imageName: coffee_image }])
+        })
+      }
+
+      if (beverage === 'Water') {
+        this.setState({
+          products: this.state.products.concat([{ productName: "Valtech Water Bottle", imageName: generic_image }])
         })
       }
 

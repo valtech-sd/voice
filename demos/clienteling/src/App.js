@@ -315,7 +315,15 @@ class App extends React.Component {
     beverageClassifier.addDocument('sprite', 'Sprite');
     beverageClassifier.addDocument('mountain dew', 'Mountain dew');
     beverageClassifier.addDocument('wine', 'Wine');
+    beverageClassifier.addDocument('pop', 'Pop');
+    beverageClassifier.addDocument('soda', 'Soda');
     beverageClassifier.train();
+
+    var cityClassifier = new natural.BayesClassifier();
+    cityClassifier.addDocument('default', 'default');
+    cityClassifier.addDocument('San Diego', 'San Diego');
+    cityClassifier.addDocument('Honolulu', 'Honolulu');
+    cityClassifier.train();
 
     var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     var recognition = new SpeechRecognition();
@@ -338,14 +346,15 @@ class App extends React.Component {
       let nameItem = nameArray.map(function(e){
         return e;
       });
-      if (nameItem.length >= 1) {
+      if (nameItem.length >= 1 && nameItem != "Diego") {
+        console.log("name item is: " + nameItem)
         this.setState({
-          name: nameItem
+          name: nameItem[0]
         })
       }
       
       //listen for company
-      let companyTest = nlp(text).organizations();
+      let companyTest = nlp(text).organizations()
       let companyArray = companyTest.out('array')
       let companyItem = companyArray.map(function(e){
         return e;
@@ -353,6 +362,30 @@ class App extends React.Component {
       if (companyItem.length >= 1) {
         this.setState({
           company: companyItem
+        })
+      }
+
+      //work for
+      let afterCompany = nlp(text).after('work for')
+      let afterCompanyArray = afterCompany.out('array')
+      let afterCompanyItem = afterCompanyArray.map(function(e){
+        return e;
+      })
+      if (afterCompanyItem.length >= 1) {
+        this.setState({
+          company: afterCompanyItem
+        })
+      }
+
+      //work at
+      let afterCompany2 = nlp(text).after('work at')
+      let afterCompanyArray2 = afterCompany2.out('array')
+      let afterCompanyItem2 = afterCompanyArray2.map(function(e){
+        return e;
+      })
+      if (afterCompanyItem2.length >= 1) {
+        this.setState({
+          company: afterCompanyItem2
         })
       }
 
@@ -411,16 +444,24 @@ class App extends React.Component {
         })
       }
 
+       //listen for specific cities not detected by nlp above
+       let city = cityClassifier.classify(text);
+       if (city !== 'default') {
+         this.setState({
+           destination: city
+         })
+       }
+
       //listen for climate
       let climate = climateClassifier.classify(text);
-      if (climate !== 'default') {
+      let beverage = beverageClassifier.classify(text);
+      if (climate !== 'default' && beverage === 'default') {
         this.setState({
           climate: climate
         })
       }
 
       //listen for beverage
-      let beverage = beverageClassifier.classify(text);
       if (beverage !== 'default') {
         this.setState({
           beverage: beverage
@@ -446,7 +487,7 @@ class App extends React.Component {
     return (
       <Container>
           <Grid>
-            <EmployeeCard name={this.state.name}/>
+            <EmployeeCard/>
           </Grid>
         <Grid container spacing={3} direction="row" justify="center" alignItems="stretch">
           <Grid item xs={12}>

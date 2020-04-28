@@ -3,8 +3,12 @@
 body {
   margin: 0;
   background-image: url("images/background.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f6fa;
 }
 
 h1 {

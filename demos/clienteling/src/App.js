@@ -186,7 +186,10 @@ class CustomerCartCard extends React.Component {
    
           <Grid container spacing={3} direction="column">
             <Grid item>
-              <ProductCards products={this.props.products}/>
+              <ProductCards 
+                products={this.props.products}
+                removeItem = {this.props.removeItem} 
+              />
             </Grid>
           </Grid>
         
@@ -207,7 +210,7 @@ class ProductCards extends React.Component {
     const classes = {};
 
     return (
-      this.props.products.length > 0 && this.props.products.map((item) => {
+      this.props.products.length > 0 && this.props.products.map((item, index) => {
         return (
           <Card className={classes.root}>
             <CardContent>
@@ -218,11 +221,14 @@ class ProductCards extends React.Component {
                 <Grid item> 
                   <h1>{item.productName}</h1>
                 </Grid>
+                <Grid item>
+                  <h1 style={{color: "grey"}}>{item.productSize}</h1>
+                </Grid>
               </Grid>
             </CardContent>
             <CardActions>
               <Grid container direction="row-reverse">
-                <ColorButton size="small">Remove</ColorButton>
+                <ColorButton size="small" onClick={()=>this.props.removeItem(index)}>Remove</ColorButton>
               </Grid>
             </CardActions>
             <Divider light/>
@@ -238,6 +244,7 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
+    this.removeItem = this.removeItem.bind(this);
     this.state = {
       profileToggle: true,
       preferencesToggle: true,
@@ -257,6 +264,15 @@ class App extends React.Component {
       product3: " ",
       products: []
     };
+  }
+
+  removeItem = function(index) {
+    console.log("triggered the function")
+    var prods = this.state.products
+    let editedProds = prods.splice(index, 1)
+    this.setState({
+      products: prods
+    })
   }
 
   printList = function(doc) {
@@ -415,19 +431,19 @@ class App extends React.Component {
 
       if (style === 'Hoodie' && colour !== 'default' && colour !== 'White') {
         this.setState({
-          products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour + " (Unavailable)", imageName: generic_image }])
+          products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour + " (Unavailable)", productSize: this.state.size, imageName: generic_image }])
         })
       }
 
       if (style === 'Hoodie' && colour === 'White') {
         this.setState({
-          products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour, imageName: hoodie_image }])
+          products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour, productSize: this.state.size, imageName: hoodie_image }])
         })
       }
 
       if (style === 'T-Shirt' && colour !== 'default') {
         this.setState({
-          products: this.state.products.concat([{ productName: "Valtech T-Shirt - " + colour, imageName: generic_image }])
+          products: this.state.products.concat([{ productName: "Valtech T-Shirt - " + colour, productSize: this.state.size, imageName: generic_image }])
         })
       }
 
@@ -470,7 +486,7 @@ class App extends React.Component {
 
       if (beverage === 'Coffee') {
         this.setState({
-          products: this.state.products.concat([{ productName: "Two Lines Coffee Tumbler",  imageName: coffee_image }])
+          products: this.state.products.concat([{ productName: "Two Lines Coffee Tumbler", imageName: coffee_image }])
         })
       }
 
@@ -526,9 +542,8 @@ class App extends React.Component {
         <Grid item xs={6}>
             <Grid style={{height:"100%"}}>
               <CustomerCartCard
-                // product1={this.state.product1}
-                // product2={this.state.product2}
-                products ={this.state.products}
+                products = {this.state.products}
+                removeItem = {this.removeItem} 
               />
             </Grid>
         </Grid>

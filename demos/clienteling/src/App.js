@@ -237,7 +237,7 @@ class ProductCards extends React.Component {
                       </Grid>
                       <Grid item xs>
                         <Grid container justify="flex-end">
-                          <h1 style={{fontSize:16, color:"Green", margin:0}}>In Stock</h1>
+                          <h1 style={{fontSize:16, color: item.textColor, margin:0}}>{item.stock}</h1>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -479,37 +479,37 @@ class App extends React.Component {
 
         if (style === 'Hoodie' && colour !== 'default' && colour !== 'White') {
           this.setState({
-            products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour + " (Unavailable)", productSize: this.state.size, imageName: generic_image }])
+            products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour + " (Unavailable)", productSize: this.state.size, imageName: generic_image, stock: "Out of Stock", textColor: "Red"}])
           })
         }
 
         if (style === 'Hoodie' && colour === 'White') {
           this.setState({
-            products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour, productSize: this.state.size, imageName: hoodie_image }])
+            products: this.state.products.concat([{ productName: "Valtech Hoodie - White", productSize: this.state.size, imageName: hoodie_image, stock: "In Stock", textColor: "Green"}])
           })
         }
 
         if (style === 'T-Shirt' && colour !== 'default' && colour !== 'White' && colour !== 'Black' && colour !== 'Red') {
           this.setState({
-            products: this.state.products.concat([{ productName: "Valtech T-Shirt - " + colour, productSize: this.state.size, imageName: generic_image }])
+            products: this.state.products.concat([{ productName: "Valtech T-Shirt - (Unavailable)" + colour, productSize: this.state.size, imageName: generic_image, stock: "Out of Stock", textColor: "Red"}])
           })
         }
 
         if (style === 'T-Shirt' && colour == 'Black') {
           this.setState({
-            products: this.state.products.concat([{ productName: "Valtech T-Shirt - Black", productSize: this.state.size, imageName: tshirt_black }])
+            products: this.state.products.concat([{ productName: "Valtech T-Shirt - Black", productSize: this.state.size, imageName: tshirt_black, stock: "In Stock", textColor: "Green"}])
           })
         }
 
         if (style === 'T-Shirt' && colour == 'White') {
           this.setState({
-            products: this.state.products.concat([{ productName: "Valtech T-Shirt - White", productSize: this.state.size, imageName: tshirt_white }])
+            products: this.state.products.concat([{ productName: "Valtech T-Shirt - White", productSize: this.state.size, imageName: tshirt_white, stock: "In Stock", textColor: "Green"}])
           })
         }
 
         if (style === 'T-Shirt' && colour == 'Red') {
           this.setState({
-            products: this.state.products.concat([{ productName: "Valtech T-Shirt - Red", productSize: this.state.size, imageName: tshirt_red }])
+            products: this.state.products.concat([{ productName: "Valtech T-Shirt - Red", productSize: this.state.size, imageName: tshirt_red, stock: "In Stock", textColor: "Green"}])
           })
         }
       }
@@ -555,13 +555,13 @@ class App extends React.Component {
 
         if (beverage === 'Coffee') {
           this.setState({
-            products: this.state.products.concat([{ productName: "Two Lines Coffee Tumbler", imageName: coffee_image }])
+            products: this.state.products.concat([{ productName: "Two Lines Coffee Tumbler", imageName: coffee_image, stock: "In Stock", textColor: "Green" }])
           })
         }
 
         if (beverage === 'Water') {
           this.setState({
-            products: this.state.products.concat([{ productName: "Valtech Water Bottle", imageName: water_bottle }])
+            products: this.state.products.concat([{ productName: "Valtech Water Bottle", imageName: water_bottle, stock: "In Stock", textColor: "Green" }])
           })
         }
       }

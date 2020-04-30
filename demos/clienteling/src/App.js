@@ -100,10 +100,11 @@ class ProfileCard extends React.Component {
             </Grid>
         </Grid>
         </CardContent>
-        {/* <CardActions>
-          <Button size="small">Listen</Button>
-          <ColorButton size="small">Confirm</ColorButton>
-        </CardActions> */}
+        <CardActions>
+          <Button size="small" onClick={ () => this.props.profileToggle(true) }>Listen</Button>
+          <Button size="small" onClick={ () => this.props.profileToggle(false) }>Confirmed</Button>
+          {/* <ColorButton size="small" onClick={ () => this.props.profileToggle(false) }>Confirmed</ColorButton> */}
+        </CardActions>
       </Card>
     )
   }
@@ -130,10 +131,10 @@ class PreferencesCard extends React.Component {
             </Grid>
           </Grid>
         </CardContent>
-        {/* <CardActions>
-          <Button size="small">Listen</Button>
-          <ColorButton size="small">Confirm</ColorButton>
-        </CardActions> */}
+        <CardActions>
+          <Button size="small" onClick={ () => this.props.preferencesToggle(true) }>Listen</Button>
+          <Button size="small" onClick={ () => this.props.preferencesToggle(false) }>Confirmed</Button>
+        </CardActions>
       </Card>
     )
   }
@@ -159,10 +160,10 @@ class LifestyleCard extends React.Component {
           </Grid>
         </Grid>
         </CardContent>
-        {/* <CardActions>
-          <Button size="small">Listen</Button>
-          <ColorButton size="small">Confirm</ColorButton>
-        </CardActions> */}
+        <CardActions>
+          <Button size="small" onClick={ () => this.props.lifestyleToggle(true) }>Listen</Button>
+          <Button size="small" onClick={ () => this.props.lifestyleToggle(false) }>Confirmed</Button>
+        </CardActions>
       </Card>
     )
   }
@@ -283,10 +284,33 @@ class App extends React.Component {
     };
   }
 
+  profileToggle = (active) => {
+    this.setState({
+      profileToggle: active
+    })
+  }
+
+  preferencesToggle = (active) => {
+    this.setState({
+      preferencesToggle: active
+    })
+  }
+
+  lifestyleToggle = (active) => {
+    this.setState({
+      lifestyleToggle: active
+    })
+  }
+
+  cartToggle = (active) => {
+    this.setState({
+      cartToggle: active
+    })
+  }
+
   removeItem = function(index) {
-    console.log("triggered the function")
     var prods = this.state.products
-    let editedProds = prods.splice(index, 1)
+    prods.splice(index, 1)
     this.setState({
       products: prods
     })
@@ -373,162 +397,173 @@ class App extends React.Component {
       console.log('Confidence: ' + e.results[0][0].confidence);
       console.log('Text detected: ' + text);
 
-      //listen for person's name
-      let nameTest = nlp(text).people();
-      let nameArray = nameTest.out('array')
-      let nameItem = nameArray.map(function(e){
-        return e;
-      });
-      if (nameItem.length >= 1 && nameItem != "Diego") {
-        console.log("name item is: " + nameItem)
-        this.setState({
-          name: nameItem[0]
-        })
-      }
       
-      //listen for company
-      let companyTest = nlp(text).organizations()
-      let companyArray = companyTest.out('array')
-      let companyItem = companyArray.map(function(e){
-        return e;
-      });
-      if (companyItem.length >= 1) {
-        this.setState({
-          company: companyItem
+
+      if (this.state.profileToggle) {
+
+        //listen for person's name
+        let nameTest = nlp(text).people();
+        let nameArray = nameTest.out('array')
+        let nameItem = nameArray.map(function(e){
+          return e;
+        });
+        if (nameItem.length >= 1 && nameItem != "Diego") {
+          console.log("name item is: " + nameItem)
+          this.setState({
+            name: nameItem[0]
+          })
+        }
+    
+        //listen for company (named entity)
+        let companyTest = nlp(text).organizations()
+        let companyArray = companyTest.out('array')
+        let companyItem = companyArray.map(function(e){
+          return e;
+        });
+        if (companyItem.length >= 1) {
+          this.setState({
+            company: companyItem
+          })
+        }
+
+        //listen for word after 'work for'
+        let afterCompany = nlp(text).after('work for')
+        let afterCompanyArray = afterCompany.out('array')
+        let afterCompanyItem = afterCompanyArray.map(function(e){
+          return e;
         })
+        if (afterCompanyItem.length >= 1) {
+          this.setState({
+            company: afterCompanyItem
+          })
+        }
+
+        //listen for word after 'work at'
+        let afterCompany2 = nlp(text).after('work at')
+        let afterCompanyArray2 = afterCompany2.out('array')
+        let afterCompanyItem2 = afterCompanyArray2.map(function(e){
+          return e;
+        })
+        if (afterCompanyItem2.length >= 1) {
+          this.setState({
+            company: afterCompanyItem2
+          })
+        }
       }
 
-      //work for
-      let afterCompany = nlp(text).after('work for')
-      let afterCompanyArray = afterCompany.out('array')
-      let afterCompanyItem = afterCompanyArray.map(function(e){
-        return e;
-      })
-      if (afterCompanyItem.length >= 1) {
-        this.setState({
-          company: afterCompanyItem
-        })
+      if (this.state.preferencesToggle) {
+
+        //listen for colour
+        let colour = colourClassifier.classify(text);
+        if (colour !== 'default') {
+          this.setState({
+            colour: colour
+          })
+        }
+
+        //listen for size
+        let size = sizeClassifier.classify(text);
+        if (size !== 'default') {
+          this.setState({
+            size: size
+          })
+        }
+
+        //listen for style
+        let style = styleClassifier.classify(text);
+        if (style !== 'default') {
+          this.setState({
+            style: style
+          })
+        }
+
+        if (style === 'Hoodie' && colour !== 'default' && colour !== 'White') {
+          this.setState({
+            products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour + " (Unavailable)", productSize: this.state.size, imageName: generic_image }])
+          })
+        }
+
+        if (style === 'Hoodie' && colour === 'White') {
+          this.setState({
+            products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour, productSize: this.state.size, imageName: hoodie_image }])
+          })
+        }
+
+        if (style === 'T-Shirt' && colour !== 'default' && colour !== 'White' && colour !== 'Black' && colour !== 'Red') {
+          this.setState({
+            products: this.state.products.concat([{ productName: "Valtech T-Shirt - " + colour, productSize: this.state.size, imageName: generic_image }])
+          })
+        }
+
+        if (style === 'T-Shirt' && colour == 'Black') {
+          this.setState({
+            products: this.state.products.concat([{ productName: "Valtech T-Shirt - Black", productSize: this.state.size, imageName: tshirt_black }])
+          })
+        }
+
+        if (style === 'T-Shirt' && colour == 'White') {
+          this.setState({
+            products: this.state.products.concat([{ productName: "Valtech T-Shirt - White", productSize: this.state.size, imageName: tshirt_white }])
+          })
+        }
+
+        if (style === 'T-Shirt' && colour == 'Red') {
+          this.setState({
+            products: this.state.products.concat([{ productName: "Valtech T-Shirt - Red", productSize: this.state.size, imageName: tshirt_red }])
+          })
+        }
       }
 
-      //work at
-      let afterCompany2 = nlp(text).after('work at')
-      let afterCompanyArray2 = afterCompany2.out('array')
-      let afterCompanyItem2 = afterCompanyArray2.map(function(e){
-        return e;
-      })
-      if (afterCompanyItem2.length >= 1) {
-        this.setState({
-          company: afterCompanyItem2
-        })
-      }
+      if (this.state.lifestyleToggle) {
 
-      //listen for colour
-      let colour = colourClassifier.classify(text);
-      if (colour !== 'default') {
-        this.setState({
-          colour: colour
-        })
-      }
+        //listen for destination
+        let destinationTest = nlp(text).places();
+        let destinationArray = destinationTest.out('array')
+        let destinationItem = destinationArray.map(function(e){
+          return e;
+        });
 
-      //listen for size
-      let size = sizeClassifier.classify(text);
-      if (size !== 'default') {
-        this.setState({
-          size: size
-        })
-      }
+        if (destinationItem.length >= 1) {
+          this.setState({
+            destination: destinationItem
+          })
+        }
 
-      //listen for style
-      let style = styleClassifier.classify(text);
-      if (style !== 'default') {
-        this.setState({
-          style: style
-        })
-      }
+        //listen for specific cities not detected by nlp above
+        let city = cityClassifier.classify(text);
+        if (city !== 'default') {
+          this.setState({
+            destination: city
+          })
+        }
 
-      if (style === 'Hoodie' && colour !== 'default' && colour !== 'White') {
-        this.setState({
-          products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour + " (Unavailable)", productSize: this.state.size, imageName: generic_image }])
-        })
-      }
+        //listen for climate
+        let climate = climateClassifier.classify(text);
+        let beverage = beverageClassifier.classify(text);
+        if (climate !== 'default' && beverage === 'default') {
+          this.setState({
+            climate: climate
+          })
+        }
 
-      if (style === 'Hoodie' && colour === 'White') {
-        this.setState({
-          products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour, productSize: this.state.size, imageName: hoodie_image }])
-        })
-      }
+        //listen for beverage
+        if (beverage !== 'default') {
+          this.setState({
+            beverage: beverage
+          })
+        }
 
-      if (style === 'T-Shirt' && colour !== 'default' && colour !== 'White' && colour !== 'Black' && colour !== 'Red') {
-        this.setState({
-          products: this.state.products.concat([{ productName: "Valtech T-Shirt - " + colour, productSize: this.state.size, imageName: generic_image }])
-        })
-      }
+        if (beverage === 'Coffee') {
+          this.setState({
+            products: this.state.products.concat([{ productName: "Two Lines Coffee Tumbler", imageName: coffee_image }])
+          })
+        }
 
-      if (style === 'T-Shirt' && colour == 'Black') {
-        this.setState({
-          products: this.state.products.concat([{ productName: "Valtech T-Shirt - Black", productSize: this.state.size, imageName: tshirt_black }])
-        })
-      }
-
-      if (style === 'T-Shirt' && colour == 'White') {
-        this.setState({
-          products: this.state.products.concat([{ productName: "Valtech T-Shirt - White", productSize: this.state.size, imageName: tshirt_white }])
-        })
-      }
-
-      if (style === 'T-Shirt' && colour == 'Red') {
-        this.setState({
-          products: this.state.products.concat([{ productName: "Valtech T-Shirt - Red", productSize: this.state.size, imageName: tshirt_red }])
-        })
-      }
-
-      //listen for destination
-      let destinationTest = nlp(text).places();
-      let destinationArray = destinationTest.out('array')
-      let destinationItem = destinationArray.map(function(e){
-        return e;
-      });
-
-      if (destinationItem.length >= 1) {
-        this.setState({
-          destination: destinationItem
-        })
-      }
-
-       //listen for specific cities not detected by nlp above
-       let city = cityClassifier.classify(text);
-       if (city !== 'default') {
-         this.setState({
-           destination: city
-         })
-       }
-
-      //listen for climate
-      let climate = climateClassifier.classify(text);
-      let beverage = beverageClassifier.classify(text);
-      if (climate !== 'default' && beverage === 'default') {
-        this.setState({
-          climate: climate
-        })
-      }
-
-      //listen for beverage
-      if (beverage !== 'default') {
-        this.setState({
-          beverage: beverage
-        })
-      }
-
-      if (beverage === 'Coffee') {
-        this.setState({
-          products: this.state.products.concat([{ productName: "Two Lines Coffee Tumbler", imageName: coffee_image }])
-        })
-      }
-
-      if (beverage === 'Water') {
-        this.setState({
-          products: this.state.products.concat([{ productName: "Valtech Water Bottle", imageName: water_bottle }])
-        })
+        if (beverage === 'Water') {
+          this.setState({
+            products: this.state.products.concat([{ productName: "Valtech Water Bottle", imageName: water_bottle }])
+          })
+        }
       }
 
     })
@@ -552,6 +587,7 @@ class App extends React.Component {
                 <ProfileCard 
                 name={this.state.name} 
                 company={this.state.company}
+                profileToggle={this.profileToggle}
                 />
               </Grid>
 
@@ -560,6 +596,7 @@ class App extends React.Component {
                 colour={this.state.colour}
                 size={this.state.size}
                 style={this.state.style}
+                preferencesToggle={this.preferencesToggle}
                 />
               </Grid>
 
@@ -568,6 +605,7 @@ class App extends React.Component {
                 destination={this.state.destination}
                 climate={this.state.climate}
                 beverage={this.state.beverage}
+                lifestyleToggle={this.lifestyleToggle}
                 />
               </Grid>
 

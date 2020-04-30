@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "./static/css/main.c2d11212.chunk.css",
-    "main.js": "./static/js/main.45b8c09f.chunk.js",
-    "main.js.map": "./static/js/main.45b8c09f.chunk.js.map",
+    "main.js": "./static/js/main.f441feaa.chunk.js",
+    "main.js.map": "./static/js/main.f441feaa.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.1451e3c5.js",
     "runtime-main.js.map": "./static/js/runtime-main.1451e3c5.js.map",
-    "static/js/2.cd61df44.chunk.js": "./static/js/2.cd61df44.chunk.js",
-    "static/js/2.cd61df44.chunk.js.map": "./static/js/2.cd61df44.chunk.js.map",
+    "static/js/2.a5d007e5.chunk.js": "./static/js/2.a5d007e5.chunk.js",
+    "static/js/2.a5d007e5.chunk.js.map": "./static/js/2.a5d007e5.chunk.js.map",
     "index.html": "./index.html",
-    "precache-manifest.3cd3e9649461fb67b736138c6dbdfb56.js": "./precache-manifest.3cd3e9649461fb67b736138c6dbdfb56.js",
+    "precache-manifest.40abb870d3bd1deaa0eec4a0ecceccc6.js": "./precache-manifest.40abb870d3bd1deaa0eec4a0ecceccc6.js",
     "service-worker.js": "./service-worker.js",
     "static/css/main.c2d11212.chunk.css.map": "./static/css/main.c2d11212.chunk.css.map",
-    "static/js/2.cd61df44.chunk.js.LICENSE.txt": "./static/js/2.cd61df44.chunk.js.LICENSE.txt",
+    "static/js/2.a5d007e5.chunk.js.LICENSE.txt": "./static/js/2.a5d007e5.chunk.js.LICENSE.txt",
     "static/media/index.css": "./static/media/background.fda94f2a.svg",
     "static/media/customer-profile@3x.png": "./static/media/customer-profile@3x.9c9d6ba9.png",
     "static/media/employee.jpg": "./static/media/employee.cebd0fe9.jpg",
@@ -21,12 +21,15 @@
     "static/media/item-3@3x.png": "./static/media/item-3@3x.aecd9030.png",
     "static/media/item@3x.png": "./static/media/item@3x.f93d536e.png",
     "static/media/success.png": "./static/media/success.509606c9.png",
+    "static/media/tshirt-black.jpg": "./static/media/tshirt-black.fc116075.jpg",
+    "static/media/tshirt-red.jpg": "./static/media/tshirt-red.c9d247ac.jpg",
+    "static/media/tshirt-white.jpg": "./static/media/tshirt-white.be30f423.jpg",
     "static/media/waveform.png": "./static/media/waveform.42ab1b0b.png"
   },
   "entrypoints": [
     "static/js/runtime-main.1451e3c5.js",
-    "static/js/2.cd61df44.chunk.js",
+    "static/js/2.a5d007e5.chunk.js",
     "static/css/main.c2d11212.chunk.css",
-    "static/js/main.45b8c09f.chunk.js"
+    "static/js/main.f441feaa.chunk.js"
   ]
 }

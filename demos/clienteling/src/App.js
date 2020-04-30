@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './App.css';
 import { withStyles } from '@material-ui/core/styles'
+import Box from '@material-ui/core/Box'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button';
@@ -23,6 +24,10 @@ import lifestyle_icon from './images/image-3@3x.png'
 import hoodie_image from './images/item-3@3x.png'
 import coffee_image from './images/item@3x.png'
 import generic_image from './images/item-2@3x.png'
+import water_bottle from './images/water-bottle.jpg'
+import tshirt_white from './images/tshirt-white.jpg'
+import tshirt_black from './images/tshirt-black.jpg'
+import tshirt_red from './images/tshirt-red.jpg'
 
 const ColorButton = withStyles((theme) => ({
   root: {
@@ -183,16 +188,14 @@ class CustomerCartCard extends React.Component {
             </Grid>
           </Grid>
           <Divider light/>
-   
-          <Grid container spacing={3} direction="column">
-            <Grid item>
+          <Grid container direction="column">
+            {/* <Grid item> */}
               <ProductCards 
                 products={this.props.products}
                 removeItem = {this.props.removeItem} 
               />
-            </Grid>
+            {/* </Grid> */}
           </Grid>
-        
         </CardContent>
         <CardActions>
           <Grid container direction="row-reverse">
@@ -206,33 +209,47 @@ class CustomerCartCard extends React.Component {
 
 class ProductCards extends React.Component {
   render(){
-
-    const classes = {};
-
     return (
       this.props.products.length > 0 && this.props.products.map((item, index) => {
         return (
-          <Card className={classes.root}>
-            <CardContent>
-              <Grid container spacing={2} direction="row">
-                <Grid item>
-                  <img src={item.imageName} style={{height:80, width:80}}/>
+          <Box marginTop={2}>
+                <Grid container direction="row">
+                  <Grid item xs>
+                    <img src={item.imageName} style={{height:80, width:80}}/>
+                  </Grid>
+                  { item.productSize ? 
+                    <Grid item xs={6}> 
+                      <h1 style={{fontSize:16}}>{item.productName}</h1>
+                      <h1 style={{color: "grey"}}>Size: {item.productSize}</h1>
+                    </Grid>
+                    :
+                    <Grid item xs={6}> 
+                      <h1 style={{fontSize:16}}>{item.productName}</h1>
+                    </Grid>
+                  }
+                  <Grid item xs>
+                    <Grid container direction="column">
+                      <Grid item xs>
+                        <Grid container justify="flex-end">
+                          <h1 style={{fontSize:16, marginBlottom:0}}>1</h1>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs>
+                        <Grid container justify="flex-end">
+                          <h1 style={{fontSize:16, color:"Green", margin:0}}>In Stock</h1>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
                 </Grid>
-                <Grid item> 
-                  <h1>{item.productName}</h1>
-                </Grid>
-                <Grid item>
-                  <h1 style={{color: "grey"}}>{item.productSize}</h1>
+              <Grid item>
+                <Grid container direction="row-reverse">
+                  <ColorButton size="small" onClick={()=>this.props.removeItem(index)}>Remove</ColorButton>
                 </Grid>
               </Grid>
-            </CardContent>
-            <CardActions>
-              <Grid container direction="row-reverse">
-                <ColorButton size="small" onClick={()=>this.props.removeItem(index)}>Remove</ColorButton>
-              </Grid>
-            </CardActions>
-            <Divider light/>
-          </Card>
+              <span>&nbsp;</span> 
+              <Divider light/>
+          </Box>
         )
       })
     )
@@ -441,9 +458,27 @@ class App extends React.Component {
         })
       }
 
-      if (style === 'T-Shirt' && colour !== 'default') {
+      if (style === 'T-Shirt' && colour !== 'default' && colour !== 'White' && colour !== 'Black' && colour !== 'Red') {
         this.setState({
           products: this.state.products.concat([{ productName: "Valtech T-Shirt - " + colour, productSize: this.state.size, imageName: generic_image }])
+        })
+      }
+
+      if (style === 'T-Shirt' && colour == 'Black') {
+        this.setState({
+          products: this.state.products.concat([{ productName: "Valtech T-Shirt - Black", productSize: this.state.size, imageName: tshirt_black }])
+        })
+      }
+
+      if (style === 'T-Shirt' && colour == 'White') {
+        this.setState({
+          products: this.state.products.concat([{ productName: "Valtech T-Shirt - White", productSize: this.state.size, imageName: tshirt_white }])
+        })
+      }
+
+      if (style === 'T-Shirt' && colour == 'Red') {
+        this.setState({
+          products: this.state.products.concat([{ productName: "Valtech T-Shirt - Red", productSize: this.state.size, imageName: tshirt_red }])
         })
       }
 
@@ -492,7 +527,7 @@ class App extends React.Component {
 
       if (beverage === 'Water') {
         this.setState({
-          products: this.state.products.concat([{ productName: "Valtech Water Bottle", imageName: generic_image }])
+          products: this.state.products.concat([{ productName: "Valtech Water Bottle", imageName: water_bottle }])
         })
       }
 

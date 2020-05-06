@@ -353,6 +353,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'Voice Clienteling'
 
     if(isChrome){ 
     
@@ -369,8 +370,7 @@ class App extends React.Component {
       colourClassifier.addDocument('orange', 'Orange');
       colourClassifier.addDocument('red', 'Red');
       colourClassifier.addDocument('pink', 'Pink');
-      colourClassifier.addDocument('dark', 'Dark');
-      colourClassifier.addDocument('light', 'Light');
+      colourClassifier.addDocument('green', 'Green');
       colourClassifier.train();
 
       var sizeClassifier = new natural.BayesClassifier();
@@ -511,37 +511,37 @@ class App extends React.Component {
             })
           }
 
-          if (style === 'Hoodie' && colour !== 'default' && colour !== 'White') {
+          if (style === 'Hoodie' && this.state.colour !== 'default' && this.state.colour !== 'White') {
             this.setState({
-              products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour + " (Unavailable)", productSize: this.state.size, imageName: generic_image, stock: "Out of Stock", textColor: "Red"}])
+              products: this.state.products.concat([{ productName: "Valtech Hoodie - " + this.state.colour, productSize: this.state.size, imageName: generic_image, stock: "Out of Stock", textColor: "Red"}])
             })
           }
 
-          if (style === 'Hoodie' && colour === 'White') {
+          if (style === 'Hoodie' && this.state.colour === 'White') {
             this.setState({
               products: this.state.products.concat([{ productName: "Valtech Hoodie - White", productSize: this.state.size, imageName: hoodie_image, stock: "In Stock", textColor: "Green"}])
             })
           }
 
-          if (style === 'T-Shirt' && colour !== 'default' && colour !== 'White' && colour !== 'Black' && colour !== 'Red') {
+          if (style === 'T-Shirt' && this.state.colour !== 'default' && this.state.colour !== 'White' && this.state.colour !== 'Black' && this.state.colour !== 'Red') {
             this.setState({
-              products: this.state.products.concat([{ productName: "Valtech T-Shirt - (Unavailable)" + colour, productSize: this.state.size, imageName: generic_image, stock: "Out of Stock", textColor: "Red"}])
+              products: this.state.products.concat([{ productName: "Valtech T-Shirt - " + this.state.colour, productSize: this.state.size, imageName: generic_image, stock: "Out of Stock", textColor: "Red"}])
             })
           }
 
-          if (style === 'T-Shirt' && colour == 'Black') {
+          if (style === 'T-Shirt' && this.state.colour == 'Black') {
             this.setState({
               products: this.state.products.concat([{ productName: "Valtech T-Shirt - Black", productSize: this.state.size, imageName: tshirt_black, stock: "In Stock", textColor: "Green"}])
             })
           }
 
-          if (style === 'T-Shirt' && colour == 'White') {
+          if (style === 'T-Shirt' && this.state.colour == 'White') {
             this.setState({
               products: this.state.products.concat([{ productName: "Valtech T-Shirt - White", productSize: this.state.size, imageName: tshirt_white, stock: "In Stock", textColor: "Green"}])
             })
           }
 
-          if (style === 'T-Shirt' && colour == 'Red') {
+          if (style === 'T-Shirt' && this.state.traincolour == 'Red') {
             this.setState({
               products: this.state.products.concat([{ productName: "Valtech T-Shirt - Red", productSize: this.state.size, imageName: tshirt_red, stock: "In Stock", textColor: "Green"}])
             })

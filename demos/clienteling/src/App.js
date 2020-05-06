@@ -30,6 +30,8 @@ import tshirt_white from './images/tshirt-white.jpg'
 import tshirt_black from './images/tshirt-black.jpg'
 import tshirt_red from './images/tshirt-red.jpg'
 
+const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+
 const ColorButton = withStyles((theme) => ({
   root: {
     color: theme.palette.getContrastText('#651fff'),
@@ -352,328 +354,349 @@ class App extends React.Component {
 
   componentDidMount() {
 
-    this.getMicrophone()
-
-    var colourClassifier = new natural.BayesClassifier();
-    colourClassifier.addDocument('default', 'default');
-    colourClassifier.addDocument('grey', 'Grey');
-    colourClassifier.addDocument('white', 'White');
-    colourClassifier.addDocument('black', 'Black');
-    colourClassifier.addDocument('purple', 'Purple');
-    colourClassifier.addDocument('blue', 'Blue');
-    colourClassifier.addDocument('yellow', 'Yellow');
-    colourClassifier.addDocument('orange', 'Orange');
-    colourClassifier.addDocument('red', 'Red');
-    colourClassifier.addDocument('pink', 'Pink');
-    colourClassifier.addDocument('dark', 'Dark');
-    colourClassifier.addDocument('light', 'Light');
-    colourClassifier.train();
-
-    var sizeClassifier = new natural.BayesClassifier();
-    sizeClassifier.addDocument('default', 'default');
-    sizeClassifier.addDocument('small', 'Small');
-    sizeClassifier.addDocument('medium', 'Medium');
-    sizeClassifier.addDocument('large', 'Large');
-    sizeClassifier.addDocument('extra large', 'Extra Large');
-    sizeClassifier.train();
-
-    var styleClassifier = new natural.BayesClassifier();
-    styleClassifier.addDocument('default', 'default');
-    styleClassifier.addDocument('hoodie', 'Hoodie');
-    styleClassifier.addDocument('sweatshirt', 'Sweatshirt');
-    styleClassifier.addDocument('long sleeve', 'Long Sleeve');
-    styleClassifier.addDocument('short sleeve', 'Short Sleeve');
-    styleClassifier.addDocument('t-shirt', 'T-Shirt');
-    styleClassifier.train();
-
-    var climateClassifier = new natural.BayesClassifier();
-    climateClassifier.addDocument('default', 'default');
-    climateClassifier.addDocument('hot', 'Hot')
-    climateClassifier.addDocument('warm', 'Warm');
-    climateClassifier.addDocument('cold', 'Cold');
-    climateClassifier.addDocument('temperate', 'Temperate');
-    climateClassifier.train();
-
-    var beverageClassifier = new natural.BayesClassifier();
-    beverageClassifier.addDocument('default', 'default');
-    beverageClassifier.addDocument('water', 'Water');
-    beverageClassifier.addDocument('coffee', 'Coffee');
-    beverageClassifier.addDocument('coke', 'Coke');
-    beverageClassifier.addDocument('pepsi', 'Pepsi');
-    beverageClassifier.addDocument('beer', 'Beer');
-    beverageClassifier.addDocument('sprite', 'Sprite');
-    beverageClassifier.addDocument('mountain dew', 'Mountain dew');
-    beverageClassifier.addDocument('wine', 'Wine');
-    beverageClassifier.addDocument('pop', 'Pop');
-    beverageClassifier.addDocument('soda', 'Soda');
-    beverageClassifier.train();
-
-    var cityClassifier = new natural.BayesClassifier();
-    cityClassifier.addDocument('default', 'default');
-    cityClassifier.addDocument('San Diego', 'San Diego');
-    cityClassifier.addDocument('Honolulu', 'Honolulu');
-    cityClassifier.train();
-
-    var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    var recognition = new SpeechRecognition();
-    recognition.continuous = true;
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-    recognition.lang = 'en-US';
-    recognition.start();
-    recognition.onend = () => recognition.start() //force restart recognition when it times out
-  
-    //Listen for detection events
-    recognition.addEventListener('result', (e) => {
-      let last = e.results.length - 1;
-      let text = e.results[last][0].transcript;
-      console.log('Confidence: ' + e.results[0][0].confidence);
-      console.log('Text detected: ' + text);
-
-      if (this.state.profileToggle) {
-        //listen for person's name
-        let nameTest = nlp(text).people();
-        let nameArray = nameTest.out('array')
-        let nameItem = nameArray.map(function(e){
-          return e;
-        });
-        if (nameItem.length >= 1 && nameItem != "Diego") {
-          console.log("name item is: " + nameItem)
-          this.setState({
-            name: nameItem[0]
-          })
-        }
+    if(isChrome){ 
     
-        //listen for company (named entity)
-        let companyTest = nlp(text).organizations()
-        let companyArray = companyTest.out('array')
-        let companyItem = companyArray.map(function(e){
-          return e;
-        });
-        if (companyItem.length >= 1) {
-          this.setState({
-            company: companyItem
+      this.getMicrophone()
+
+      var colourClassifier = new natural.BayesClassifier();
+      colourClassifier.addDocument('default', 'default');
+      colourClassifier.addDocument('grey', 'Grey');
+      colourClassifier.addDocument('white', 'White');
+      colourClassifier.addDocument('black', 'Black');
+      colourClassifier.addDocument('purple', 'Purple');
+      colourClassifier.addDocument('blue', 'Blue');
+      colourClassifier.addDocument('yellow', 'Yellow');
+      colourClassifier.addDocument('orange', 'Orange');
+      colourClassifier.addDocument('red', 'Red');
+      colourClassifier.addDocument('pink', 'Pink');
+      colourClassifier.addDocument('dark', 'Dark');
+      colourClassifier.addDocument('light', 'Light');
+      colourClassifier.train();
+
+      var sizeClassifier = new natural.BayesClassifier();
+      sizeClassifier.addDocument('default', 'default');
+      sizeClassifier.addDocument('small', 'Small');
+      sizeClassifier.addDocument('medium', 'Medium');
+      sizeClassifier.addDocument('large', 'Large');
+      sizeClassifier.addDocument('extra large', 'Extra Large');
+      sizeClassifier.train();
+
+      var styleClassifier = new natural.BayesClassifier();
+      styleClassifier.addDocument('default', 'default');
+      styleClassifier.addDocument('hoodie', 'Hoodie');
+      styleClassifier.addDocument('sweatshirt', 'Sweatshirt');
+      styleClassifier.addDocument('long sleeve', 'Long Sleeve');
+      styleClassifier.addDocument('short sleeve', 'Short Sleeve');
+      styleClassifier.addDocument('t-shirt', 'T-Shirt');
+      styleClassifier.train();
+
+      var climateClassifier = new natural.BayesClassifier();
+      climateClassifier.addDocument('default', 'default');
+      climateClassifier.addDocument('hot', 'Hot')
+      climateClassifier.addDocument('warm', 'Warm');
+      climateClassifier.addDocument('cold', 'Cold');
+      climateClassifier.addDocument('temperate', 'Temperate');
+      climateClassifier.train();
+
+      var beverageClassifier = new natural.BayesClassifier();
+      beverageClassifier.addDocument('default', 'default');
+      beverageClassifier.addDocument('water', 'Water');
+      beverageClassifier.addDocument('coffee', 'Coffee');
+      beverageClassifier.addDocument('coke', 'Coke');
+      beverageClassifier.addDocument('pepsi', 'Pepsi');
+      beverageClassifier.addDocument('beer', 'Beer');
+      beverageClassifier.addDocument('sprite', 'Sprite');
+      beverageClassifier.addDocument('mountain dew', 'Mountain dew');
+      beverageClassifier.addDocument('wine', 'Wine');
+      beverageClassifier.addDocument('pop', 'Pop');
+      beverageClassifier.addDocument('soda', 'Soda');
+      beverageClassifier.train();
+
+      var cityClassifier = new natural.BayesClassifier();
+      cityClassifier.addDocument('default', 'default');
+      cityClassifier.addDocument('San Diego', 'San Diego');
+      cityClassifier.addDocument('Honolulu', 'Honolulu');
+      cityClassifier.train();
+
+      var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      var recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+      recognition.lang = 'en-US';
+      recognition.start();
+      recognition.onend = () => recognition.start() //force restart recognition when it times out
+    
+      //Listen for detection events
+      recognition.addEventListener('result', (e) => {
+        let last = e.results.length - 1;
+        let text = e.results[last][0].transcript;
+        console.log('Confidence: ' + e.results[0][0].confidence);
+        console.log('Text detected: ' + text);
+
+        if (this.state.profileToggle) {
+          //listen for person's name
+          let nameTest = nlp(text).people();
+          let nameArray = nameTest.out('array')
+          let nameItem = nameArray.map(function(e){
+            return e;
+          });
+          if (nameItem.length >= 1 && nameItem != "Diego") {
+            console.log("name item is: " + nameItem)
+            this.setState({
+              name: nameItem[0]
+            })
+          }
+      
+          //listen for company (named entity)
+          let companyTest = nlp(text).organizations()
+          let companyArray = companyTest.out('array')
+          let companyItem = companyArray.map(function(e){
+            return e;
+          });
+          if (companyItem.length >= 1) {
+            this.setState({
+              company: companyItem
+            })
+          }
+
+          //listen for word after 'work for'
+          let afterCompany = nlp(text).after('work for')
+          let afterCompanyArray = afterCompany.out('array')
+          let afterCompanyItem = afterCompanyArray.map(function(e){
+            return e;
           })
+          if (afterCompanyItem.length >= 1) {
+            this.setState({
+              company: afterCompanyItem
+            })
+          }
+
+          //listen for word after 'work at'
+          let afterCompany2 = nlp(text).after('work at')
+          let afterCompanyArray2 = afterCompany2.out('array')
+          let afterCompanyItem2 = afterCompanyArray2.map(function(e){
+            return e;
+          })
+          if (afterCompanyItem2.length >= 1) {
+            this.setState({
+              company: afterCompanyItem2
+            })
+          }
         }
 
-        //listen for word after 'work for'
-        let afterCompany = nlp(text).after('work for')
-        let afterCompanyArray = afterCompany.out('array')
-        let afterCompanyItem = afterCompanyArray.map(function(e){
-          return e;
-        })
-        if (afterCompanyItem.length >= 1) {
-          this.setState({
-            company: afterCompanyItem
-          })
+        if (this.state.preferencesToggle) {
+
+          //listen for colour
+          let colour = colourClassifier.classify(text);
+          if (colour !== 'default') {
+            this.setState({
+              colour: colour
+            })
+          }
+
+          //listen for size
+          let size = sizeClassifier.classify(text);
+          if (size !== 'default') {
+            this.setState({
+              size: size
+            })
+          }
+
+          //listen for style
+          let style = styleClassifier.classify(text);
+          if (style !== 'default') {
+            this.setState({
+              style: style
+            })
+          }
+
+          if (style === 'Hoodie' && colour !== 'default' && colour !== 'White') {
+            this.setState({
+              products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour + " (Unavailable)", productSize: this.state.size, imageName: generic_image, stock: "Out of Stock", textColor: "Red"}])
+            })
+          }
+
+          if (style === 'Hoodie' && colour === 'White') {
+            this.setState({
+              products: this.state.products.concat([{ productName: "Valtech Hoodie - White", productSize: this.state.size, imageName: hoodie_image, stock: "In Stock", textColor: "Green"}])
+            })
+          }
+
+          if (style === 'T-Shirt' && colour !== 'default' && colour !== 'White' && colour !== 'Black' && colour !== 'Red') {
+            this.setState({
+              products: this.state.products.concat([{ productName: "Valtech T-Shirt - (Unavailable)" + colour, productSize: this.state.size, imageName: generic_image, stock: "Out of Stock", textColor: "Red"}])
+            })
+          }
+
+          if (style === 'T-Shirt' && colour == 'Black') {
+            this.setState({
+              products: this.state.products.concat([{ productName: "Valtech T-Shirt - Black", productSize: this.state.size, imageName: tshirt_black, stock: "In Stock", textColor: "Green"}])
+            })
+          }
+
+          if (style === 'T-Shirt' && colour == 'White') {
+            this.setState({
+              products: this.state.products.concat([{ productName: "Valtech T-Shirt - White", productSize: this.state.size, imageName: tshirt_white, stock: "In Stock", textColor: "Green"}])
+            })
+          }
+
+          if (style === 'T-Shirt' && colour == 'Red') {
+            this.setState({
+              products: this.state.products.concat([{ productName: "Valtech T-Shirt - Red", productSize: this.state.size, imageName: tshirt_red, stock: "In Stock", textColor: "Green"}])
+            })
+          }
         }
 
-        //listen for word after 'work at'
-        let afterCompany2 = nlp(text).after('work at')
-        let afterCompanyArray2 = afterCompany2.out('array')
-        let afterCompanyItem2 = afterCompanyArray2.map(function(e){
-          return e;
-        })
-        if (afterCompanyItem2.length >= 1) {
-          this.setState({
-            company: afterCompanyItem2
-          })
-        }
-      }
+        if (this.state.lifestyleToggle) {
 
-      if (this.state.preferencesToggle) {
+          //listen for destination
+          let destinationTest = nlp(text).places();
+          let destinationArray = destinationTest.out('array')
+          let destinationItem = destinationArray.map(function(e){
+            return e;
+          });
 
-        //listen for colour
-        let colour = colourClassifier.classify(text);
-        if (colour !== 'default') {
-          this.setState({
-            colour: colour
-          })
-        }
+          if (destinationItem.length >= 1) {
+            this.setState({
+              destination: destinationItem
+            })
+          }
 
-        //listen for size
-        let size = sizeClassifier.classify(text);
-        if (size !== 'default') {
-          this.setState({
-            size: size
-          })
-        }
+          //listen for specific cities not detected by nlp above
+          let city = cityClassifier.classify(text);
+          if (city !== 'default') {
+            this.setState({
+              destination: city
+            })
+          }
 
-        //listen for style
-        let style = styleClassifier.classify(text);
-        if (style !== 'default') {
-          this.setState({
-            style: style
-          })
-        }
+          //listen for climate
+          let climate = climateClassifier.classify(text);
+          let beverage = beverageClassifier.classify(text);
+          if (climate !== 'default' && beverage === 'default') {
+            this.setState({
+              climate: climate
+            })
+          }
 
-        if (style === 'Hoodie' && colour !== 'default' && colour !== 'White') {
-          this.setState({
-            products: this.state.products.concat([{ productName: "Valtech Hoodie - " + colour + " (Unavailable)", productSize: this.state.size, imageName: generic_image, stock: "Out of Stock", textColor: "Red"}])
-          })
-        }
+          //listen for beverage
+          if (beverage !== 'default') {
+            this.setState({
+              beverage: beverage
+            })
+          }
 
-        if (style === 'Hoodie' && colour === 'White') {
-          this.setState({
-            products: this.state.products.concat([{ productName: "Valtech Hoodie - White", productSize: this.state.size, imageName: hoodie_image, stock: "In Stock", textColor: "Green"}])
-          })
-        }
+          if (beverage === 'Coffee') {
+            this.setState({
+              products: this.state.products.concat([{ productName: "Two Lines Coffee Tumbler", imageName: coffee_image, stock: "In Stock", textColor: "Green" }])
+            })
+          }
 
-        if (style === 'T-Shirt' && colour !== 'default' && colour !== 'White' && colour !== 'Black' && colour !== 'Red') {
-          this.setState({
-            products: this.state.products.concat([{ productName: "Valtech T-Shirt - (Unavailable)" + colour, productSize: this.state.size, imageName: generic_image, stock: "Out of Stock", textColor: "Red"}])
-          })
+          if (beverage === 'Water') {
+            this.setState({
+              products: this.state.products.concat([{ productName: "Valtech Water Bottle", imageName: water_bottle, stock: "In Stock", textColor: "Green" }])
+            })
+          }
         }
 
-        if (style === 'T-Shirt' && colour == 'Black') {
-          this.setState({
-            products: this.state.products.concat([{ productName: "Valtech T-Shirt - Black", productSize: this.state.size, imageName: tshirt_black, stock: "In Stock", textColor: "Green"}])
-          })
-        }
-
-        if (style === 'T-Shirt' && colour == 'White') {
-          this.setState({
-            products: this.state.products.concat([{ productName: "Valtech T-Shirt - White", productSize: this.state.size, imageName: tshirt_white, stock: "In Stock", textColor: "Green"}])
-          })
-        }
-
-        if (style === 'T-Shirt' && colour == 'Red') {
-          this.setState({
-            products: this.state.products.concat([{ productName: "Valtech T-Shirt - Red", productSize: this.state.size, imageName: tshirt_red, stock: "In Stock", textColor: "Green"}])
-          })
-        }
-      }
-
-      if (this.state.lifestyleToggle) {
-
-        //listen for destination
-        let destinationTest = nlp(text).places();
-        let destinationArray = destinationTest.out('array')
-        let destinationItem = destinationArray.map(function(e){
-          return e;
-        });
-
-        if (destinationItem.length >= 1) {
-          this.setState({
-            destination: destinationItem
-          })
-        }
-
-        //listen for specific cities not detected by nlp above
-        let city = cityClassifier.classify(text);
-        if (city !== 'default') {
-          this.setState({
-            destination: city
-          })
-        }
-
-        //listen for climate
-        let climate = climateClassifier.classify(text);
-        let beverage = beverageClassifier.classify(text);
-        if (climate !== 'default' && beverage === 'default') {
-          this.setState({
-            climate: climate
-          })
-        }
-
-        //listen for beverage
-        if (beverage !== 'default') {
-          this.setState({
-            beverage: beverage
-          })
-        }
-
-        if (beverage === 'Coffee') {
-          this.setState({
-            products: this.state.products.concat([{ productName: "Two Lines Coffee Tumbler", imageName: coffee_image, stock: "In Stock", textColor: "Green" }])
-          })
-        }
-
-        if (beverage === 'Water') {
-          this.setState({
-            products: this.state.products.concat([{ productName: "Valtech Water Bottle", imageName: water_bottle, stock: "In Stock", textColor: "Green" }])
-          })
-        }
-      }
-
-    })
+      })
+    }
   }
   
   render() {
-    return (
-     <div>
-      <EmployeeCard/>
-      <Container>
-        <Grid container spacing={3} direction="row" justify="center" alignItems="stretch">
-          <Grid item xs={12}>
-            <Grid container spacing={3} direction="row" alignItems="center">
-              <Grid item xs={6}>
-                <Grid container alignItems="center">
-                  <Grid item>
-                    <img style={{marginTop:50, marginLeft:26, height:105, width:105}} src={high_five} alt="avatar"/>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="h5" component="h2" style={{color:'#ffffff', fontFamily:'Poppins', fontWeight:'bold', fontSize:18, marginLeft:24}}>
-                      Voice Assistant
-                    </Typography>
+
+    if(isChrome){
+
+      return (
+      <div>
+        <EmployeeCard/>
+        <Container>
+          <Grid container spacing={3} direction="row" justify="center" alignItems="stretch">
+            <Grid item xs={12}>
+              <Grid container spacing={3} direction="row" alignItems="center">
+                <Grid item xs={6}>
+                  <Grid container alignItems="center">
+                    <Grid item>
+                      <img style={{marginTop:50, marginLeft:26, height:105, width:105}} src={high_five} alt="avatar"/>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="h5" component="h2" style={{color:'#ffffff', fontFamily:'Poppins', fontWeight:'bold', fontSize:18, marginLeft:24}}>
+                        Voice Assistant
+                      </Typography>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-              <Grid item xs={6}>
-                <div style={{marginTop:50}}>
-                  {/* <button onClick={this.toggleMicrophone}>
-                    {this.state.audio ? 'Stop microphone' : 'Get microphone input'}
-                  </button> */}
-                  {this.state.audio ? <AudioAnalyser audio={this.state.audio} /> : ''}
-                </div>
-              </Grid>
-            </Grid>   
-          </Grid>
-          
-          <Grid item xs={6}>
-            <Grid container spacing={3}>
-
-              <Grid item xs={12}>
-                <ProfileCard
-                  name={this.state.name} 
-                  company={this.state.company}
-                  profileToggle={this.profileToggle}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <PreferencesCard 
-                  colour={this.state.colour}
-                  size={this.state.size}
-                  style={this.state.style}
-                  preferencesToggle={this.preferencesToggle}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <LifestyleCard
-                  destination={this.state.destination}
-                  climate={this.state.climate}
-                  beverage={this.state.beverage}
-                  lifestyleToggle={this.lifestyleToggle}
-                />
-              </Grid>
-
-          </Grid>
-        </Grid>
-
-        <Grid item xs={6}>
-            <Grid style={{height:"100%"}}>
-              <CustomerCartCard
-                products = {this.state.products}
-                removeItem = {this.removeItem} 
-              />
+                <Grid item xs={6}>
+                  <div style={{marginTop:50}}>
+                    {/* <button onClick={this.toggleMicrophone}>
+                      {this.state.audio ? 'Stop microphone' : 'Get microphone input'}
+                    </button> */}
+                    {this.state.audio ? <AudioAnalyser audio={this.state.audio} /> : ''}
+                  </div>
+                </Grid>
+              </Grid>   
             </Grid>
+            
+            <Grid item xs={6}>
+              <Grid container spacing={3}>
+
+                <Grid item xs={12}>
+                  <ProfileCard
+                    name={this.state.name} 
+                    company={this.state.company}
+                    profileToggle={this.profileToggle}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <PreferencesCard 
+                    colour={this.state.colour}
+                    size={this.state.size}
+                    style={this.state.style}
+                    preferencesToggle={this.preferencesToggle}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <LifestyleCard
+                    destination={this.state.destination}
+                    climate={this.state.climate}
+                    beverage={this.state.beverage}
+                    lifestyleToggle={this.lifestyleToggle}
+                  />
+                </Grid>
+
+            </Grid>
+          </Grid>
+
+          <Grid item xs={6}>
+              <Grid style={{height:"100%"}}>
+                <CustomerCartCard
+                  products = {this.state.products}
+                  removeItem = {this.removeItem} 
+                />
+              </Grid>
+          </Grid>
         </Grid>
-      </Grid>
-      </Container>
-      </div>
-    );
+        </Container>
+        </div>
+      );
+    } else {
+      return (
+        <Container>
+          <Grid container direction="column" justify="center" alignItems="center" style={{minHeight:'100vh'}}>
+            <Grid item>
+              <Card style={{borderRadius:25, padding:14}}>
+                <Typography>
+                  Please use Chrome instead 🤷‍♂️
+                </Typography>
+              </Card>
+            </Grid>
+          </Grid>
+        </Container>
+      )
+    }
   }
 }
 

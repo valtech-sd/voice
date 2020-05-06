@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import natural from 'natural';
 import nlp from 'compromise'
 import { Avatar, Divider } from '@material-ui/core';
+import AudioAnalyser from './AudioAnalyser'; 
 
 //images
 import valtech_logo from './images/group.svg';
@@ -32,7 +33,7 @@ import tshirt_red from './images/tshirt-red.jpg'
 const ColorButton = withStyles((theme) => ({
   root: {
     color: theme.palette.getContrastText('#651fff'),
-    backgroundColor: '#304ffe',
+    backgroundColor: '#3700ff',
     boxShadow: 24,
     fontFamily: 'Poppins',
     '&:hover': {
@@ -45,7 +46,7 @@ const ColorButton = withStyles((theme) => ({
 class EmployeeCard extends React.Component {
   render() {
     return (
-      <Card variant="outlined" flex-direction='row'>
+      <Card variant="outlined" flex-direction='row' style={{borderRadius:0}}>
         <CardContent>
           <Grid container spacing={3} direction="row" alignItems='center'>
             <Grid item xs={6}>
@@ -72,7 +73,12 @@ class OscilloscopeDiv extends React.Component {
           <img src={high_five} alt="avatar"/>
         </Grid>
         <Grid item xs={6}>
-          <img src={waveform} alt="waveform" style={{width:500}}/>
+          <div>
+            <button onClick={this.toggleMicrophone}>
+              {this.state.audio ? 'Stop microphone' : 'Get microphone input'}
+            </button>
+            {this.state.audio ? <AudioAnalyser audio={this.state.audio} /> : ''}
+          </div>
         </Grid>
       </Grid>   
       )
@@ -83,21 +89,21 @@ class ProfileCard extends React.Component {
   render() {
     const classes = {};
     return (
-      <Card variant="outlined">
+      <Card variant="outlined" style={{padding:14, borderRadius:25}}>
         <CardContent>
-        <Typography className={classes.title} gutterBottom style={{fontFamily: 'Poppins', fontSize: 24}}>
+        <Typography className={classes.title} gutterBottom style={{fontFamily:'Poppins', fontWeight:'bold', fontSize: 20, marginBottom:20}}>
             Customer Profile
         </Typography>
-        <Grid container spacing={3} direction="row">
-            <Grid item xs={2}>
-              <img src={customer_img} alt="client" style={{height:80, width:80}}/>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography variant="h5" component="h2" gutterBottom style={{color:'#304ffe', fontFamily:'Poppins'}}>
-                { this.props.name }
-              </Typography>
-              <h1>Company : {this.props.company}</h1>
-            </Grid>
+        <Grid container spacing={4} direction="row">
+          <Grid item xs={2}>
+            <img src={customer_img} alt="client" style={{height:86, width:86}}/>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="h5" component="h2" gutterBottom style={{color:'#3700ff', fontFamily:'Poppins', fontWeight:'bold', fontSize:18, marginLeft:24}}>
+              { this.props.name }
+            </Typography>
+            <h1 style={{fontSize:14, fontWeight:'bold', marginLeft:24}}>Company : {this.props.company}</h1>
+          </Grid>
         </Grid>
         </CardContent>
         <CardActions>
@@ -113,21 +119,22 @@ class ProfileCard extends React.Component {
 class PreferencesCard extends React.Component {
   render(){
     return (
-      <Card variant="outlined">
+      <Card variant="outlined" style={{padding:14, borderRadius:25}}>
         <CardContent>
-          <Typography gutterBottom style={{fontFamily: 'Poppins', fontSize: 24}}>
+          <Typography gutterBottom style={{fontFamily: 'Poppins', fontWeight:'bold', fontSize: 20, marginBottom:20}}>
             Preferences
           </Typography>
-          <Grid container spacing={3} direction="row">
+          <Grid container spacing={4} direction="row">
             <Grid item xs={2}>
               <img src={preferences_icon} alt="client" style={{height:80, width:80}}/>
             </Grid>
             <Grid item xs={6}>
-              <Typography variant="h5" component="p" style={{fontFamily: 'Poppins', fontSize: 24}}>
+              {/* <Typography variant="h5" component="p" style={{fontFamily: 'Poppins', fontWeight:'bold', fontSize:18, marginLeft:24}}>
                 { this.props.style }
-              </Typography>
-              <h1> Colour: { this.props.colour } </h1>
-              <h1> Size: { this.props.size } </h1>
+              </Typography> */}
+              <h1 style={{fontSize:14, fontWeight:'bold', marginLeft:24, marginTop:0}}> Style: { this.props.style } </h1>
+              <h1 style={{fontSize:14, fontWeight:'bold', marginLeft:24}}> Colour: { this.props.colour } </h1>
+              <h1 style={{fontSize:14, fontWeight:'bold', marginLeft:24}}> Size: { this.props.size } </h1>
             </Grid>
           </Grid>
         </CardContent>
@@ -144,19 +151,19 @@ class LifestyleCard extends React.Component {
   render(){ 
     const classes = {};
     return (
-      <Card className={classes.root} variant="outlined">
+      <Card className={classes.root} variant="outlined" style={{padding:14, borderRadius:25}}>
         <CardContent>
-        <Typography className={classes.title} gutterBottom style={{fontFamily: 'Poppins', fontSize: 24}}>
+        <Typography className={classes.title} gutterBottom style={{fontFamily: 'Poppins', fontWeight:'bold', fontSize: 20, marginBottom:20}}>
           Lifestyle
         </Typography>
-        <Grid container spacing={3} direction='row'>
+        <Grid container spacing={4} direction='row'>
           <Grid item xs={2}>
             <img src={lifestyle_icon} alt="client" style={{height:80, width:80}}/>
           </Grid>
           <Grid item xs={6}>
-            <h1> Destination: { this.props.destination } </h1>
-            <h1> Climate: { this.props.climate } </h1>
-            <h1> Beverage: { this.props.beverage } </h1>
+            <h1 style={{fontSize:14, fontWeight:'bold', marginLeft:24, marginTop:0}}> Destination: { this.props.destination } </h1>
+            <h1 style={{fontSize:14, fontWeight:'bold', marginLeft:24}}> Climate: { this.props.climate } </h1>
+            <h1 style={{fontSize:14, fontWeight:'bold', marginLeft:24}}> Beverage: { this.props.beverage } </h1>
           </Grid>
         </Grid>
         </CardContent>
@@ -173,7 +180,7 @@ class CustomerCartCard extends React.Component {
   render(){
     const classes = {};
     return (
-      <Card className={classes.root} variant="outlined" style={{height:"100%"}}>
+      <Card className={classes.root} variant="outlined" style={{height:"96.37%", borderRadius:25, padding:14}}>
         <CardContent>
           <Typography className={classes.title} gutterBottom style={{fontFamily: 'Poppins', fontSize: 24}}>
             Customer Cart
@@ -200,7 +207,7 @@ class CustomerCartCard extends React.Component {
         </CardContent>
         <CardActions>
           <Grid container direction="row-reverse">
-            <ColorButton size="small" style={{padding: 20}}>Prepare Order</ColorButton>
+            <ColorButton size="small" style={{width:209, height:71, fontWeight:'bold'}}>Prepare Order</ColorButton>
           </Grid>
         </CardActions>
       </Card>
@@ -261,19 +268,19 @@ class ProductCards extends React.Component {
 class App extends React.Component {
 
   constructor(props) {
-    super(props);
-    this.removeItem = this.removeItem.bind(this);
+    super(props); 
     this.state = {
       profileToggle: true,
       preferencesToggle: true,
       lifestyleToggle: true,
       cartToggle: true,
+      audio: null,
       name: "Name",
       position: " ",
       company: " ",
       size: " ",
       colour: " ",
-      style: "Style",
+      style: " ",
       destination: " ",
       climate: " ",
       beverage: " ",
@@ -282,6 +289,29 @@ class App extends React.Component {
       product3: " ",
       products: []
     };
+    this.removeItem = this.removeItem.bind(this);
+    this.toggleMicrophone = this.toggleMicrophone.bind(this);
+  }
+
+  async getMicrophone(){
+    const audio = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+      video: false
+    })
+    this.setState({ audio });
+  }
+
+  stopMicrophone() {
+    this.state.audio.getTracks().forEach(track => track.stop());
+    this.setState({ audio: null });
+  }
+
+  toggleMicrophone() {
+    if (this.state.audio) {
+      this.stopMicrophone();
+    } else {
+      this.getMicrophone();
+    }
   }
 
   profileToggle = (active) => {
@@ -321,6 +351,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+
+    this.getMicrophone()
 
     var colourClassifier = new natural.BayesClassifier();
     colourClassifier.addDocument('default', 'default');
@@ -389,18 +421,16 @@ class App extends React.Component {
     recognition.maxAlternatives = 1;
     recognition.lang = 'en-US';
     recognition.start();
-    recognition.onend = () => recognition.start()
+    recognition.onend = () => recognition.start() //force restart recognition when it times out
   
+    //Listen for detection events
     recognition.addEventListener('result', (e) => {
       let last = e.results.length - 1;
       let text = e.results[last][0].transcript;
       console.log('Confidence: ' + e.results[0][0].confidence);
       console.log('Text detected: ' + text);
 
-      
-
       if (this.state.profileToggle) {
-
         //listen for person's name
         let nameTest = nlp(text).people();
         let nameArray = nameTest.out('array')
@@ -571,41 +601,61 @@ class App extends React.Component {
   
   render() {
     return (
+     <div>
+      <EmployeeCard/>
       <Container>
-          <Grid>
-            <EmployeeCard/>
-          </Grid>
         <Grid container spacing={3} direction="row" justify="center" alignItems="stretch">
           <Grid item xs={12}>
-            <OscilloscopeDiv/>
+            <Grid container spacing={3} direction="row" alignItems="center">
+              <Grid item xs={6}>
+                <Grid container alignItems="center">
+                  <Grid item>
+                    <img style={{marginTop:50, marginLeft:26, height:105, width:105}} src={high_five} alt="avatar"/>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="h5" component="h2" style={{color:'#ffffff', fontFamily:'Poppins', fontWeight:'bold', fontSize:18, marginLeft:24}}>
+                      Voice Assistant
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={6}>
+                <div style={{marginTop:50}}>
+                  {/* <button onClick={this.toggleMicrophone}>
+                    {this.state.audio ? 'Stop microphone' : 'Get microphone input'}
+                  </button> */}
+                  {this.state.audio ? <AudioAnalyser audio={this.state.audio} /> : ''}
+                </div>
+              </Grid>
+            </Grid>   
           </Grid>
           
           <Grid item xs={6}>
             <Grid container spacing={3}>
 
               <Grid item xs={12}>
-                <ProfileCard 
-                name={this.state.name} 
-                company={this.state.company}
-                profileToggle={this.profileToggle}
+                <ProfileCard
+                  name={this.state.name} 
+                  company={this.state.company}
+                  profileToggle={this.profileToggle}
                 />
               </Grid>
 
               <Grid item xs={12}>
                 <PreferencesCard 
-                colour={this.state.colour}
-                size={this.state.size}
-                style={this.state.style}
-                preferencesToggle={this.preferencesToggle}
+                  colour={this.state.colour}
+                  size={this.state.size}
+                  style={this.state.style}
+                  preferencesToggle={this.preferencesToggle}
                 />
               </Grid>
 
               <Grid item xs={12}>
                 <LifestyleCard
-                destination={this.state.destination}
-                climate={this.state.climate}
-                beverage={this.state.beverage}
-                lifestyleToggle={this.lifestyleToggle}
+                  destination={this.state.destination}
+                  climate={this.state.climate}
+                  beverage={this.state.beverage}
+                  lifestyleToggle={this.lifestyleToggle}
                 />
               </Grid>
 
@@ -622,6 +672,7 @@ class App extends React.Component {
         </Grid>
       </Grid>
       </Container>
+      </div>
     );
   }
 }

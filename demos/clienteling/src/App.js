@@ -375,6 +375,7 @@ class App extends React.Component {
 
       var sizeClassifier = new natural.BayesClassifier();
       sizeClassifier.addDocument('default', 'default');
+      sizeClassifier.addDocument('extra small', 'Extra Small');
       sizeClassifier.addDocument('small', 'Small');
       sizeClassifier.addDocument('medium', 'Medium');
       sizeClassifier.addDocument('large', 'Large');

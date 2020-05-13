@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.d1b05096.chunk.css",
-    "main.js": "/static/js/main.a1e62b52.chunk.js",
-    "main.js.map": "/static/js/main.a1e62b52.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.21866d50.js",
-    "runtime-main.js.map": "/static/js/runtime-main.21866d50.js.map",
-    "static/js/2.943c89cb.chunk.js": "/static/js/2.943c89cb.chunk.js",
-    "static/js/2.943c89cb.chunk.js.map": "/static/js/2.943c89cb.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.d3b73071e47eb82553634ce209f91468.js": "/precache-manifest.d3b73071e47eb82553634ce209f91468.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.d1b05096.chunk.css.map": "/static/css/main.d1b05096.chunk.css.map",
-    "static/js/2.943c89cb.chunk.js.LICENSE.txt": "/static/js/2.943c89cb.chunk.js.LICENSE.txt",
-    "static/media/chanel2.jpeg": "/static/media/chanel2.4580eb6d.jpeg",
-    "static/media/chanel3.jpeg": "/static/media/chanel3.31551529.jpeg",
-    "static/media/chanel5.jpeg": "/static/media/chanel5.482c4154.jpeg",
-    "static/media/chanel6.jpeg": "/static/media/chanel6.fa05dd0d.jpeg",
-    "static/media/logo.svg": "/static/media/logo.5d5d9eef.svg"
+    "main.css": "./static/css/main.d1b05096.chunk.css",
+    "main.js": "./static/js/main.b451592f.chunk.js",
+    "main.js.map": "./static/js/main.b451592f.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.d975eb60.js",
+    "runtime-main.js.map": "./static/js/runtime-main.d975eb60.js.map",
+    "static/js/2.82d67781.chunk.js": "./static/js/2.82d67781.chunk.js",
+    "static/js/2.82d67781.chunk.js.map": "./static/js/2.82d67781.chunk.js.map",
+    "index.html": "./index.html",
+    "precache-manifest.846c2e0cc0280c369f8231eb7b42335f.js": "./precache-manifest.846c2e0cc0280c369f8231eb7b42335f.js",
+    "service-worker.js": "./service-worker.js",
+    "static/css/main.d1b05096.chunk.css.map": "./static/css/main.d1b05096.chunk.css.map",
+    "static/js/2.82d67781.chunk.js.LICENSE.txt": "./static/js/2.82d67781.chunk.js.LICENSE.txt",
+    "static/media/chanel2.jpeg": "./static/media/chanel2.4580eb6d.jpeg",
+    "static/media/chanel3.jpeg": "./static/media/chanel3.31551529.jpeg",
+    "static/media/chanel5.jpeg": "./static/media/chanel5.482c4154.jpeg",
+    "static/media/chanel6.jpeg": "./static/media/chanel6.fa05dd0d.jpeg",
+    "static/media/logo.svg": "./static/media/logo.5d5d9eef.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.21866d50.js",
-    "static/js/2.943c89cb.chunk.js",
+    "static/js/runtime-main.d975eb60.js",
+    "static/js/2.82d67781.chunk.js",
     "static/css/main.d1b05096.chunk.css",
-    "static/js/main.a1e62b52.chunk.js"
+    "static/js/main.b451592f.chunk.js"
   ]
 }

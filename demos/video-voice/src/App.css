@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  position: relative;
+  background-image: linear-gradient(#304ffe, white);
 }
 
 .App-logo {
@@ -36,3 +38,20 @@
     transform: rotate(360deg);
   }
 }
+
+.overlay {
+  position: absolute;
+  top: 660px;
+  right: 155px;
+  bottom: 0;
+  left: 155px;
+  color: #fff;
+  text-align: center;
+  align-content: left;
+}
+
+.inARow {
+  display: inline-block;
+  margin: 5px;
+}
+

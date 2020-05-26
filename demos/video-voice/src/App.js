@@ -21,13 +21,20 @@ import chanel_image4 from './images/chanel4.jpeg';
 import chanel_image5 from './images/chanel5.jpeg';
 import chanel_image6 from './images/chanel6.jpeg';
 
+import blankLipstickRed from './images/blankLipstickRed.jpg';
+import blankPerfume1 from './images/blankPerfume1.jpg';
+import blankLipstickGrey from './images/blankLipstickGrey.jpg';
+import blankFoundation1 from './images/blankFoundation1.jpg';
+import blankFoundation2 from './images/blankFoundation2.jpg';
+import blankEyeliner1 from './images/blankEyeliner1.jpeg';
+import blankEyeliner2 from './images/blankEyeliner2.jpeg';
+
 
 const ColorButton = withStyles((theme) => ({
   root: {
     color: theme.palette.getContrastText('#651fff'),
     backgroundColor: '#304ffe',
     boxShadow: 24,
-    fontFamily: 'Poppins',
     '&:hover': {
       backgroundColor: '#651fff',
     },
@@ -49,22 +56,21 @@ class CustomerCartCard extends React.Component {
 
 class ProductCards extends React.Component {
   render(){
-    const classes = {};
     return (
-      <div class='row'>
+      <div>
       {
       this.props.products.length > 0 && this.props.products.map((item) => {
         return (
-          <div class='col-md-6'>
+          <div className="inARow">
           <Card>
             <CardContent>
-              <Grid container direction="row">
+              <Grid container spacing={2} direction="row">
                 <Grid item>
-                  <img src={item.imageName} alt="client" style={{height:80, width:80}}/>
+                  <img src={item.imageName} alt="client" style={{height:50, width:50}}/>
                 </Grid>
                 <Grid item>
                   <h2>{item.productName}</h2>
-                </Grid>  
+                </Grid>
               </Grid>
             </CardContent>
             <CardActions>
@@ -73,11 +79,25 @@ class ProductCards extends React.Component {
               </Grid>
             </CardActions>
           </Card>
-          </div>
+          // </div>
         )
       })
       }
       </div> 
+    )
+  }
+}
+
+class Overlay extends React.Component {
+  render(){
+    return(
+      <div className="overlay">
+        {/* <Grid container alignItems="flex-end">
+          <Grid item> */}
+            <CustomerCartCard products={this.props.products}/>
+          {/* </Grid>
+        </Grid> */}
+      </div>
     )
   }
 }
@@ -108,6 +128,7 @@ class App extends React.Component {
     productClassifier.addDocument('foundation', 'foundation');
     productClassifier.addDocument('tan', 'tan');
     productClassifier.addDocument('tanner', 'tanner');
+    productClassifier.addDocument('eyeliner', 'eyeliner');
     productClassifier.train();
 
     var colourClassifier = new natural.BayesClassifier();
@@ -183,22 +204,27 @@ class App extends React.Component {
 
       if (product === 'lipstick' && colour === 'red') {
         this.setState({
-          products: this.state.products.concat([{ productName: "Chanel Lipstick - Red", imageName: chanel_image3 }])
+          products: this.state.products.concat([{ productName: "Lipstick - Red", imageName: blankLipstickRed }])
+        })
+      } 
+
+      if (product === 'lipstick' && colour === 'grey') {
+        this.setState({
+          products: this.state.products.concat([{ productName: "Lipstick - Grey", imageName: blankLipstickGrey }])
         })
       } 
       
       if (product === 'perfume') {
         this.setState({
-          products: this.state.products.concat([{ productName: "Chanel No 5 ", imageName: chanel_image6}])
+          products: this.state.products.concat([{ productName: "Perfume", imageName: blankPerfume1}])
         })
       }
 
-      if (product === 'tan' || product === 'tanner') {
+      if (product === 'foundation') {
         this.setState({
-          products: this.state.products.concat([{ productName: "Soleil de Tan", imageName: chanel_image2}])
+          products: this.state.products.concat([{ productName: "Foundation", imageName: blankFoundation1}])
         })
       }
-
     })
   }
 
@@ -206,21 +232,24 @@ class App extends React.Component {
     return (
       <div className="App">
       <Container>
-        <Grid container>
-          <Grid item xs={3}>
-            <CustomerCartCard
-              products={this.state.products}
-            />
-          </Grid>
-          <Grid item xs={6}>
+        <Grid container style={{position: "relative"}}>
+          <Grid item xs={12}>
             <Webcam height={720} width={1280}/>
           </Grid>
-        </Grid>
+          <Grid item xs={12}>
+            {/* <Grid container direction="row">
+              <Grid item> */}
+                <div className="overlay">
+                  <CustomerCartCard products={this.state.products}/>
+                </div>
+              {/* </Grid>
+            </Grid> */}
+          </Grid>
+        </Grid> 
       </Container>
       </div>
     );
   }
-  
 }
 
 export default App;

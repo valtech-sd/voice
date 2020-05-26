@@ -1,18 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Webcam from 'react-webcam'
 import natural from 'natural'
-import nlp from 'compromise'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import { Avatar, Divider } from '@material-ui/core';
 
 import chanel_image1 from './images/chanel1.jpeg';
 import chanel_image2 from './images/chanel2.jpeg';
@@ -88,21 +84,6 @@ class ProductCards extends React.Component {
   }
 }
 
-class Overlay extends React.Component {
-  render(){
-    return(
-      <div className="overlay">
-        {/* <Grid container alignItems="flex-end">
-          <Grid item> */}
-            <CustomerCartCard products={this.props.products}/>
-          {/* </Grid>
-        </Grid> */}
-      </div>
-    )
-  }
-}
-
-
 class App extends React.Component {
 
   constructor(props) {
@@ -153,37 +134,13 @@ class App extends React.Component {
     recognition.maxAlternatives = 1;
     recognition.lang = 'en-US';
     recognition.start();
+    recognition.onend = () => recognition.start() //force restart recognition when it times out
   
     recognition.addEventListener('result', (e) => {
       let last = e.results.length - 1;
       let text = e.results[last][0].transcript;
       console.log('Confidence: ' + e.results[0][0].confidence);
       console.log('Text detected: ' + text);
-
-      // //listen for person's name
-      // let nameTest = nlp(text).people();
-      // let nameArray = nameTest.out('array')
-      // let nameItem = nameArray.map(function(e){
-      //   return e;
-      // });
-      // if (nameItem.length >= 1) {
-      //   this.setState({
-      //     name: nameItem
-      //   })
-      // }
-      
-      // //listen for company
-      // let companyTest = nlp(text).organizations();
-      // let companyArray = companyTest.out('array')
-      // let companyItem = companyArray.map(function(e){
-      //   return e;
-      // });
-      // if (companyItem.length >= 1) {
-      //   this.setState({
-      //     company: companyItem
-      //   })
-      // }
-
 
       //listen for product
       let product = productClassifier.classify(text);
@@ -237,13 +194,9 @@ class App extends React.Component {
             <Webcam height={720} width={1280}/>
           </Grid>
           <Grid item xs={12}>
-            {/* <Grid container direction="row">
-              <Grid item> */}
-                <div className="overlay">
-                  <CustomerCartCard products={this.state.products}/>
-                </div>
-              {/* </Grid>
-            </Grid> */}
+            <div className="overlay">
+              <CustomerCartCard products={this.state.products}/>
+            </div>
           </Grid>
         </Grid> 
       </Container>
